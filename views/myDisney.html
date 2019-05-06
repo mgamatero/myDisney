@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- font-awesome -->
+    <link href="https://fonts.googleapis.com/css?family=Baloo|Chewy" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <title>My Disney App</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div class="title text-center h2 p-1 m-4">Disneyland</div>
+                
+                <div class="row">
+                    <div id="disney"></div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="title text-center h2 p-1 m-4">CA Adventure</div>
+                
+                <div class="row">
+                    <div id="disney"></div>
+                </div>
+
+                <!-- <div class="display-5">CA ADV RIDES</div>
+        
+            <div class="row">
+                <div id="caAdv"></div>
+            </div> -->
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- jQuery minified.  From code.jquery.com, not the Bootstrap site!! -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap -getbootstrap.com -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+
+            var DisneyRides = [];
+            var CAAdventureRides = [];
+
+
+            getRideTimes('/DisneyRides', DisneyRides, "#disney");
+            getRideTimes('/CAAdventureRides', CAAdventureRides, "#caAdv");
+
+
+            // getRideTimes('/CAAdventureRides',CAAdventureRides).then(()=>{
+            //     $('#caadventure').append(CAAdventureRides);
+            // });
+
+            function renderTiles(name, min) {
+
+                return `                       
+                            <div class = "card m-2 bg-warning">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-8 border-right">
+                                            <h5 class="text-center align-middle rideText">${name}</h5>
+                                        </div>
+                                     <div class="col-4">
+                                            <h3 class="text-center align-middle minText">${min}</h3>  
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+
+            }
+
+
+            // ------------------------------------------------------------------------------
+            // getRideTimes - Function that gets rides and times.  Utilizes themeparks npm.
+            // ------------------------------------------------------------------------------
+            function getRideTimes(route, arr, id) {
+                $.get(route).then((data) => {
+                    console.log(data)
+                    arr.push(data)
+
+                    for (var i = 0; i < data.length; i++) {
+                        $(id).append(renderTiles(data[i].name, data[i].min));
+
+                    }
+
+
+                })
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>
