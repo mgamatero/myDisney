@@ -19,31 +19,26 @@
 
 <body>
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <div class="col-md-6">
                 <div class="title text-center h2 p-3 mt-2" style="width:100%">Disneyland
-                    <br><span class="lead" id="disneyTimes"></span></div>
-                <div class="row">
-                    <div id="disney" class="text-center"><i class="loader fas fa-sync-alt fa-7x mt-3"></i></div>
+                    <br><span class="lead" id="disneyTimes"></span>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div id="disney" class="text-center my-auto"><i class="loader fas fa-sync-alt fa-7x mt-3"></i></div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="row">
+                <div class="row d-flex justify-content-center">
                     <div class="title text-center h2 p-3 mt-2" style="width:100%">CA Adventure
-                        <br><span class="lead" id="caAdvTimes"></span></div>
-                    <div id="caAdv" class="text-center "><i class="loader fas fa-sync-alt fa-7x mt-3"></i></div>
+                        <br><span class="lead" id="caAdvTimes"></span>
+                    </div>
+                    <div id="caAdv" class="text-center my-auto"><i class="loader fas fa-sync-alt fa-7x mt-3"></i></div>
                 </div>
-
-                </div>
+            </div>
         </div>
     </div>
-
-
-
-
-
-
 
 
 
@@ -61,9 +56,6 @@
     <script>
         $(document).ready(function () {
 
-
-            var DisneyRides = [];
-            var CAAdventureRides = [];
 
 
             $.get('/Disney/Times')
@@ -86,7 +78,8 @@
 
 
 
-
+            var DisneyRides = [];
+            var CAAdventureRides = [];
 
             getRideTimes('/DisneyRides', DisneyRides, "#disney");
             getRideTimes('/CAAdventureRides', CAAdventureRides, "#caAdv");
@@ -99,7 +92,7 @@
             function renderTiles(name, min) {
 
                 return `                       
-                            <div class = "card m-2 bg-warning">
+                            <div class = "card m-2">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-8 border-right">
@@ -124,15 +117,17 @@
                     console.log(data)
                     arr.push(data)
                     $(id).empty();
-                    for (var i = 0; i < data.length; i++) {
-                        $(id).append(renderTiles(data[i].name, data[i].min));
 
+                    if (data.length === 0) {
+                        $(id).append('<h5 class="text-center align-middle rideText">Park is closed, sorry</h5>')
                     }
-
-
+                    else {
+                        for (var i = 0; i < data.length; i++) {
+                            $(id).append(renderTiles(data[i].name, data[i].min));
+                        }
+                    }
                 })
             }
-
         })
     </script>
 
