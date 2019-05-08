@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <!-- font-awesome -->
     <link href="https://fonts.googleapis.com/css?family=Baloo|Chewy" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -19,25 +21,21 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                
+                <div class="title text-center h2 p-3 mt-2" style="width:100%">Disneyland
+                    <br><span class="lead" id="disneyTimes"></span></div>
                 <div class="row">
-                        <div class="title text-center h2 m-3 p-3" style="width:100%">Disneyland</div>
-                    <div id="disney" class="text-center"></div>
+                    <div id="disney" class="text-center"><i class="loader fas fa-sync-alt fa-7x mt-3"></i></div>
                 </div>
             </div>
+
             <div class="col-md-6">
-                
                 <div class="row">
-                        <div class="title text-center h2 m-3 p-3" style="width:100%">CA Adventure</div>
-                    <div id="caAdv" class=""></div>
+                    <div class="title text-center h2 p-3 mt-2" style="width:100%">CA Adventure
+                        <br><span class="lead" id="caAdvTimes"></span></div>
+                    <div id="caAdv" class="text-center "><i class="loader fas fa-sync-alt fa-7x mt-3"></i></div>
                 </div>
 
-                <!-- <div class="display-5">CA ADV RIDES</div>
-        
-            <div class="row">
-                <div id="caAdv"></div>
-            </div> -->
-            </div>
+                </div>
         </div>
     </div>
 
@@ -63,8 +61,31 @@
     <script>
         $(document).ready(function () {
 
+
             var DisneyRides = [];
             var CAAdventureRides = [];
+
+
+            $.get('/Disney/Times')
+                .then(function (data) {
+                    var openTime = moment(data.openingTime).format('LT');
+                    var closeTime = moment(data.closingTime).format('LT');
+
+                    $("#disneyTimes").empty();
+                    $("#disneyTimes").append(`${openTime} to ${closeTime}`);
+                });
+
+            $.get('/CAAdventure/Times')
+                .then(function (data) {
+                    var openTime = moment(data.openingTime).format('LT');
+                    var closeTime = moment(data.closingTime).format('LT');
+
+                    $("#caAdvTimes").empty();
+                    $("#caAdvTimes").append(`${openTime} to ${closeTime}`);
+                });
+
+
+
 
 
             getRideTimes('/DisneyRides', DisneyRides, "#disney");
@@ -102,7 +123,7 @@
                 $.get(route).then((data) => {
                     console.log(data)
                     arr.push(data)
-
+                    $(id).empty();
                     for (var i = 0; i < data.length; i++) {
                         $(id).append(renderTiles(data[i].name, data[i].min));
 

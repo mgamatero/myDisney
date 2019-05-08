@@ -1,4 +1,5 @@
 var axios = require('axios');
+var moment = require('moment')
 var Themeparks = require('themeparks')
 
 module.exports = function (app) {
@@ -61,5 +62,28 @@ module.exports = function (app) {
         });
     })
 
+    //------------------------------------------------------------------------------------
+    // Route that gets Disneyland open/close times. 
+    //------------------------------------------------------------------------------------
+    app.get('/Disney/Times', (req, res) => {              
+        var disneyLand = new Themeparks.Parks.DisneylandResortMagicKingdom();
+        disneyLand.GetOpeningTimes().then(function (times) {
+            // print opening/close times
+            console.log('DISNEYLAND times');
+            
+            res.json(times[0]);
+        }, console.error)
+    })
 
+    //------------------------------------------------------------------------------------
+    // Route that gets Disneyland open/close times. 
+    //------------------------------------------------------------------------------------
+    app.get('/CAAdventure/Times', (req, res) => {              
+        var disneyCaliforniaAdventure = new Themeparks.Parks.DisneylandResortCaliforniaAdventure();
+        disneyCaliforniaAdventure.GetOpeningTimes().then(function (times) {
+                // console.log('CAAdventure times');
+            
+            res.json(times[0]);
+        }, console.error)
+    })
 }
