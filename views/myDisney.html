@@ -56,8 +56,6 @@
     <script>
         $(document).ready(function () {
 
-
-
             $.get('/Disney/Times')
                 .then(function (data) {
                     var openTime = moment(data.openingTime).format('LT');
@@ -85,12 +83,7 @@
             getRideTimes('/CAAdventureRides', CAAdventureRides, "#caAdv");
 
 
-            // getRideTimes('/CAAdventureRides',CAAdventureRides).then(()=>{
-            //     $('#caadventure').append(CAAdventureRides);
-            // });
-
             function renderTiles(name, min) {
-
                 return `                       
                             <div class = "card m-2">
                                 <div class="card-body">
@@ -119,7 +112,7 @@
                     $(id).empty();
 
                     if (data.length === 0) {
-                        $(id).append('<h5 class="text-center align-middle rideText">Park is closed, sorry</h5>')
+                        $(id).append('<h3 class="text-center align-middle rideText m-3 bg-danger">Park is closed, sorry</h3>')
                     }
                     else {
                         for (var i = 0; i < data.length; i++) {
