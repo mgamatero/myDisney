@@ -9,7 +9,7 @@ deployed link - https://mypersonaldisney.herokuapp.com/
 
 ## Framework/Libraries/Packages used
 
-jQuery, Bootstrap 4, Axios, Moment.js
+jQuery, Bootstrap 4, Axios, Moment.js, Express.js
 
 
 ## NPM used in this app
